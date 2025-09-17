@@ -29,6 +29,8 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd ~/fastapi-project
-            pip3 install -r requirements.txt
+            python3 -m venv env || true
+            source env/bin/activate
+            pip install -r requirements.txt
             pkill uvicorn || true
-            nohup uvicorn app.main:app --host 0.0.0.0 --port 8000 &
+            nohup env/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000 &
